@@ -39,7 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+new_player = Player("Frank", room['outside'])
 
 # Write a loop that:
 #
@@ -54,5 +54,6 @@ room['treasure'].s_to = room['narrow']
 
 game = True
 
-while game == true:
-    print(current_room.name)
+while game == True:
+    print(new_player.current_room)
+    new_room = input("Enter a direction to head in: ")
