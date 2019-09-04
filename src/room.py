@@ -33,7 +33,7 @@ class Room:
 
     
     def __str__(self):
-        return f'Current location ~~ {self.name} \nYou look around. {self.description}'
+        return f'\n\nCurrent location ~~ {self.name} \nYou look around. {self.description}'
     
     def __repr__(self):
         return f'Room({repr(self.name)}, {repr(self.description)})'

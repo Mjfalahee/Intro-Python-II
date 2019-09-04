@@ -86,25 +86,29 @@ while game == True:
 
     direction = input("Please enter a command: ")
     command = direction.split(" ")
-    print(command)
-    print(len(command))
-    print(room[new_player.current_room].items)
 
     # Handle single input commands. Travel, Help, inventory, or quit
     if len(command) == 1:
         if (direction == 'quit'):
             game = False
             pass
+
         if (direction == 'help'):
             print("You can enter commands to travel by typing: 'n, s, w, or e'")
             print("Take items by typing: take 'item'")
+            print("You can check the items you've picked up by typing: 'inventory' or simply 'i'")
             print("You can exit the game by typing: 'quit' \n")
             destination = 'help'
-        if (direction == 'inventory'):
-            print(f'Your inventory currently contains: \n')
-            for i in new_player.inventory:
-                print(f'~~ {i} ~~')
-            destination = 'help'
+
+        if direction == 'inventory' or direction == 'i':
+            if (new_player.inventory == []):
+                print('Your inventory is empty.')
+                destination= 'help'
+            else:
+                print(f'Your inventory currently contains: \n')
+                for i in new_player.inventory:
+                    print(f'~~ {i} ~~')
+                destination = 'help'
 
         elif (direction == 'n'):
             destination = room[new_player.current_room].n_to
@@ -121,6 +125,7 @@ while game == True:
             print("\n You cannot travel that way. Choose another direction. \n")
         elif destination == 'help':
             pass
+
         else:
             for i in room:
                 if destination == room[i]:
@@ -130,15 +135,32 @@ while game == True:
     # Handle multiple input commands. Get() Item, remove() Item
     elif len(command) == 2:
         if command[0] == 'get' or command[0] == 'take':
+            item_found = False
             for obj in room[new_player.current_room].items:
+                item_found = False
                 if command[1] == obj.name: #if the obj is the item in the command
+                    item_found = True
                     print(f'You take the {obj.name} and put it in your inventory.')
                     room[new_player.current_room].items.remove(obj) #remove item from the room
                     new_player.inventory.append(item[obj.name])
+                else:
+                    item_found = False
+            if not item_found:
+                print(f"You didn't find the {command[1]}, try something else.")
 
 
         elif command[0] == 'drop' or command[0] == 'remove':
-            print("You remove the item.")
+            item_found = False
+            for obj in new_player.inventory:
+                if command[1] == obj.name:
+                    print(f"You remove the {obj.name} from your inventory and drop it on the ground.")
+                    new_player.inventory.remove(obj)
+                    room[new_player.current_room].items.append(obj)
+                    item_found = True
+                else:
+                    item_found = False
+            if not item_found:
+                print("You aren't carrying that item.")
         pass
 
 
