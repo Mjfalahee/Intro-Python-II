@@ -39,7 +39,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-new_player = Player("Frank", room['outside'])
+new_player = Player("Frank", 'outside')
 
 # Write a loop that:
 #
@@ -52,8 +52,44 @@ new_player = Player("Frank", room['outside'])
 #
 # If the user enters "q", quit the game.
 
+
+# defining variables
 game = True
+destination = None
+direction = None
+
+
+print(f'Welcome to the game, {new_player.name}. This will not be an easy adventure. \n')
+
 
 while game == True:
-    print(new_player.current_room)
-    new_room = input("Enter a direction to head in: ")
+    print(f"{room[new_player.current_room]} \n")
+    direction = input("Please enter a direction to travel in (n, e, s, w): ")
+
+    if (direction == 'quit'):
+        game = False
+        pass
+
+    elif (direction == 'n'):
+        destination = room[new_player.current_room].n_to
+    elif (direction == 'e'):
+        destination = room[new_player.current_room].e_to
+    elif (direction == 'w'):
+        destination = room[new_player.current_room].w_to
+    elif (direction == 's'):
+        destination = room[new_player.current_room].s_to
+    else:
+        print("You must enter a valid direction in order to travel.")
+
+    if destination == None:
+        print("You cannot travel that way. Choose another direction.")
+    else:
+        for i in room:
+            if destination == room[i]:
+                print(f"You head towards the {room[i].name}. \n")
+                new_player.current_room = i
+
+
+
+if game == False:
+    print("\nThanks for playing! Please come back soon :) \n")
