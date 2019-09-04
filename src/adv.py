@@ -78,6 +78,11 @@ print(f'Welcome to the game, {new_player.name}. This will not be an easy adventu
 
 while game == True:
     print(f"{room[new_player.current_room]} \n")
+    if room[new_player.current_room].items != []:
+        print("This room contains the following items: ")
+        for x in room[new_player.current_room].items:
+            print("~ " + str(x))
+
     direction = input("Please enter a direction to travel in (n, e, s, w): ")
 
     if (direction == 'quit'):
