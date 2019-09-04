@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -20,6 +21,14 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+}
+
+# Declare all the items
+
+item = {
+    'broadsword' : Item("broadsword", "it is a large metal sword in a shiny scabbard."),
+    'arrow' : Item("arrow", "it has a wooden shaft with a bone tip"),
+    'pouch' : Item("pouch", "it is made of leather and clinks like metal when moved")
 }
 
 
