@@ -73,40 +73,73 @@ destination = None
 direction = None
 
 
-print(f'Welcome to the game, {new_player.name}. This will not be an easy adventure. \n')
+print(f' \n \n \nWelcome to the game, {new_player.name}. This will not be an easy adventure.')
+print(f'At any time, type help to see the possible commands. Good luck! \n')
 
 
 while game == True:
     print(f"{room[new_player.current_room]} \n")
     if room[new_player.current_room].items != []:
-        print("This room contains the following items: ")
+        print("This room contains the following item(s): ")
         for x in room[new_player.current_room].items:
             print("~ " + str(x))
 
-    direction = input("Please enter a direction to travel in (n, e, s, w): ")
+    direction = input("Please enter a command: ")
+    command = direction.split(" ")
+    print(command)
+    print(len(command))
+    print(room[new_player.current_room].items)
 
-    if (direction == 'quit'):
-        game = False
+    # Handle single input commands. Travel, Help, inventory, or quit
+    if len(command) == 1:
+        if (direction == 'quit'):
+            game = False
+            pass
+        if (direction == 'help'):
+            print("You can enter commands to travel by typing: 'n, s, w, or e'")
+            print("Take items by typing: take 'item'")
+            print("You can exit the game by typing: 'quit' \n")
+            destination = 'help'
+        if (direction == 'inventory'):
+            print(f'Your inventory currently contains: \n')
+            for i in new_player.inventory:
+                print(f'~~ {i} ~~')
+            destination = 'help'
+
+        elif (direction == 'n'):
+            destination = room[new_player.current_room].n_to
+        elif (direction == 'e'):
+            destination = room[new_player.current_room].e_to
+        elif (direction == 'w'):
+            destination = room[new_player.current_room].w_to
+        elif (direction == 's'):
+            destination = room[new_player.current_room].s_to
+        else:
+            print("You must enter a valid direction in order to travel.")
+
+        if destination == None:
+            print("\n You cannot travel that way. Choose another direction. \n")
+        elif destination == 'help':
+            pass
+        else:
+            for i in room:
+                if destination == room[i]:
+                    print(f"You head towards the {room[i].name}. \n")
+                    new_player.current_room = i
+
+    # Handle multiple input commands. Get() Item, remove() Item
+    elif len(command) == 2:
+        if command[0] == 'get' or command[0] == 'take':
+            for obj in room[new_player.current_room].items:
+                if command[1] == obj.name: #if the obj is the item in the command
+                    print(f'You take the {obj.name} and put it in your inventory.')
+                    room[new_player.current_room].items.remove(obj) #remove item from the room
+                    new_player.inventory.append(item[obj.name])
+
+
+        elif command[0] == 'drop' or command[0] == 'remove':
+            print("You remove the item.")
         pass
-
-    elif (direction == 'n'):
-        destination = room[new_player.current_room].n_to
-    elif (direction == 'e'):
-        destination = room[new_player.current_room].e_to
-    elif (direction == 'w'):
-        destination = room[new_player.current_room].w_to
-    elif (direction == 's'):
-        destination = room[new_player.current_room].s_to
-    else:
-        print("You must enter a valid direction in order to travel.")
-
-    if destination == None:
-        print("\n You cannot travel that way. Choose another direction. \n")
-    else:
-        for i in room:
-            if destination == room[i]:
-                print(f"You head towards the {room[i].name}. \n")
-                new_player.current_room = i
 
 
 
