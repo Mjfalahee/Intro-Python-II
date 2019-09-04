@@ -28,7 +28,8 @@ earlier adventurers. The only exit is to the south."""),
 item = {
     'broadsword' : Item("broadsword", "it is a large metal sword in a shiny scabbard."),
     'arrow' : Item("arrow", "it has a wooden shaft with a bone tip"),
-    'pouch' : Item("pouch", "it is made of leather and clinks like metal when moved")
+    'pouch' : Item("pouch", "it is made of leather and clinks like metal when moved"),
+    'amulet' : Item("amulet", "it is made of gold and has a large red gemstone in its center"),
 }
 
 
@@ -42,6 +43,10 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+room['foyer'].items = [item['pouch']]
+room['treasure'].items = [item['amulet'], item['broadsword']]
+room['narrow'].items = [item['arrow']]
 
 #
 # Main
