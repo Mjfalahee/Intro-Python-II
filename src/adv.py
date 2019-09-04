@@ -82,7 +82,7 @@ while game == True:
         print("You must enter a valid direction in order to travel.")
 
     if destination == None:
-        print("You cannot travel that way. Choose another direction.")
+        print("\n You cannot travel that way. Choose another direction. \n")
     else:
         for i in room:
             if destination == room[i]:
